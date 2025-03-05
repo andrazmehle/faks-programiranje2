@@ -82,7 +82,7 @@ public class Kviz1{
         return false;
     }
 
-    public static boolean jePrastevilo(int n){
+    public static boolean jeprastevilo(int n){
         if(n < 0){
             return false;
         }
@@ -100,11 +100,11 @@ public class Kviz1{
             if(i < 3 * n){
                 if(i % 2 == 0){
                     System.out.print("* ".repeat(n * 2));
-                    System.out.print("=".repeat(13 * n - 1) + "\n");
+                    System.out.print("=".repeat(11 * n + 1) + "\n");
                 }
                 else{
-                    System.out.print(" *".repeat(n) + "  ");
-                    System.out.print("=".repeat(13 * n - 1) + "\n");
+                    System.out.print(" *".repeat(2 * n - 1) + "  ");
+                    System.out.print("=".repeat(11 * n + 1) + "\n");
                 }
             }
             else{
@@ -120,6 +120,6 @@ public class Kviz1{
             //javaJavaJava(5);
             //System.out.println(jeFibonaccijevo(2021));
             //System.out.println(jePrastevilo(15));
-            izrisiZastavo(2);
+            //izrisiZastavo(3);
         }
     }
