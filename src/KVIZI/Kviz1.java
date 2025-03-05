@@ -45,16 +45,16 @@ public class Kviz1{
         String tretja = "  J  J  aaaaa   V V  aaaaa ";
         String cetrta = "   JJ  a     a   V  a     a";
 
-        String prva1 = "";
-        String druga1 = "";
-        String tretja1 = "";
-        String cetrta1 = "";
+        StringBuilder prva1 = new StringBuilder();
+        StringBuilder druga1 = new StringBuilder();
+        StringBuilder tretja1 = new StringBuilder();
+        StringBuilder cetrta1 = new StringBuilder();
 
         while (n > 0) {
-            prva1 += prva;
-            druga1 += druga;
-            tretja1 += tretja;
-            cetrta1 += cetrta;
+            prva1.append(prva);
+            druga1.append(druga);
+            tretja1.append(tretja);
+            cetrta1.append(cetrta);
             n--;
         }
 
@@ -82,7 +82,7 @@ public class Kviz1{
         return false;
     }
 
-    public static boolean jeprastevilo(int n){
+    public static boolean jePrastevilo(int n){
         if(n < 0){
             return false;
         }
