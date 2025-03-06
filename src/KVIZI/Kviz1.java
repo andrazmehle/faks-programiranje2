@@ -114,6 +114,23 @@ public class Kviz1{
         }
     }
 
+    public static void vDesetisko(int n){
+        int vrednost = 0;
+        int i = 0;
+        int nk = n;
+        while (nk > 0) {
+            int tmp = nk % 10;
+            if (tmp == 8 || tmp == 9) {
+                System.out.print("Število " + n + " ni število v osmiškem sistemu (števka " + tmp + ")");
+                return;
+            }
+            vrednost = (int) (vrednost + tmp * Math.pow(8, i));
+            i++;
+            nk = nk / 10;
+        }
+        System.out.print(n + "(8) = " + vrednost + "(10)");
+    }
+
         public static void main(String[]args){
             //krog(3, 5);
             //System.out.println(pretvoriSekunde(49330));
@@ -121,5 +138,6 @@ public class Kviz1{
             //System.out.println(jeFibonaccijevo(2021));
             //System.out.println(jePrastevilo(15));
             //izrisiZastavo(3);
+            //vDesetisko(505);
         }
     }
