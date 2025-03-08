@@ -131,13 +131,29 @@ public class Kviz1{
         System.out.print(n + "(8) = " + vrednost + "(10)");
     }
 
-        public static void main(String[]args){
+    public static String pretvoriVDesetisko(String n, int b){
+        for (int i = 0; i < n.length(); i++) {
+            if ((int) n.charAt(i) - 55 >= b){
+                int tmp = (int) n.charAt(i);
+                return "Napaka pri pretvorbi sistema - števka " + n.charAt(i);
+            }
+            else if ((int) n.charAt(i) < 58 && n.charAt(i) - 48 >= b){
+                int tmp = (int) n.charAt(i);
+                return "Napaka pri pretvorbi sistema - števka " + n.charAt(i);
+            }
+        }
+            int decimal = Integer.parseInt(n, b);
+            return n + "(" + b + ")=" + decimal + "(10)";
+    }
+
+    public static void main(String[]args){
             //krog(3, 5);
-            //System.out.println(pretvoriSekunde(49330));
+            // System.out.println(pretvoriSekunde(49330));
             //javaJavaJava(5);
             //System.out.println(jeFibonaccijevo(2021));
             //System.out.println(jePrastevilo(15));
             //izrisiZastavo(3);
             //vDesetisko(505);
+            //System.out.println(pretvoriVDesetisko("101021010", 2));
         }
     }
