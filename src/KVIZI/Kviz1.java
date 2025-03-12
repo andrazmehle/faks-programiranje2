@@ -138,7 +138,7 @@ public class Kviz1{
                 return "Napaka pri pretvorbi sistema - števka " + n.charAt(i);
             }
             else if ((int) n.charAt(i) < 58 && n.charAt(i) - 48 >= b){
-                int tmp = (int) n.charAt(i);
+                int tmp = n.charAt(i);
                 return "Napaka pri pretvorbi sistema - števka " + n.charAt(i);
             }
         }
