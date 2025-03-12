@@ -146,6 +146,19 @@ public class Kviz1{
             return n + "(" + b + ")=" + decimal + "(10)";
     }
 
+    public static int vsotaPrvih(int n){
+        int vsota = 0;
+        int i = 1;
+        while (n >= 0) {
+            if (jePrastevilo(i)){
+                vsota += i;
+                n--;
+            }
+            i++;
+        }
+        return vsota - 1;
+    }
+
     public static void main(String[]args){
             //krog(3, 5);
             // System.out.println(pretvoriSekunde(49330));
@@ -155,5 +168,6 @@ public class Kviz1{
             //izrisiZastavo(3);
             //vDesetisko(505);
             //System.out.println(pretvoriVDesetisko("10101010", 2));
+            //System.out.println(vsotaPrvih(10));
         }
     }
