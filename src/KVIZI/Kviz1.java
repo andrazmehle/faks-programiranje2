@@ -134,7 +134,7 @@ public class Kviz1{
     public static String pretvoriVDesetisko(String n, int b){
         for (int i = 0; i < n.length(); i++) {
             if ((int) n.charAt(i) - 55 >= b){
-                int tmp = (int) n.charAt(i);
+                int tmp = n.charAt(i);
                 return "Napaka pri pretvorbi sistema - števka " + n.charAt(i);
             }
             else if ((int) n.charAt(i) < 58 && n.charAt(i) - 48 >= b){
@@ -154,6 +154,6 @@ public class Kviz1{
             //System.out.println(jePrastevilo(15));
             //izrisiZastavo(3);
             //vDesetisko(505);
-            //System.out.println(pretvoriVDesetisko("101021010", 2));
+            //System.out.println(pretvoriVDesetisko("10101010", 2));
         }
     }
