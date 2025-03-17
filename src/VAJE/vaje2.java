@@ -24,13 +24,11 @@ public class vaje2 {
     }
 
     static double stirlingD(int n){
-        double fakulteta = Math.sqrt(2 * Math.PI * n);
-        return Math.round(fakulteta);
+        return Math.sqrt(2 * Math.PI * n) * Math.pow((n / Math.E), n);
     }
 
     static void izpis(){
         double napaka;
-
         System.out.println("  n              n!            Stirling(n)      napaka (%)");
         System.out.println("----------------------------------------------------------");
 
@@ -50,8 +48,8 @@ public class vaje2 {
     static void izpisD(){
         double napaka;
 
-        System.out.println("  n              n!            Stirling(n)      napaka (%)");
-        System.out.println("----------------------------------------------------------");
+        System.out.println("  n         n!            Stirling(n)     napaka (%)");
+        System.out.println("----------------------------------------------------");
 
         for (int i = 1; i <= 100; i++) {
             double fL = fakultetaD(i);
@@ -59,8 +57,8 @@ public class vaje2 {
             napaka = (fL - sL + 0.0) / fL;
 
             System.out.printf("%3d", i);
-            System.out.printf("%21.9E", fL);
-            System.out.printf("%21.9E", sL);
+            System.out.printf("%18.9E", fL);
+            System.out.printf("%18.9E", sL);
             System.out.printf("%12.7f", napaka * 100);
             System.out.println();
         }
