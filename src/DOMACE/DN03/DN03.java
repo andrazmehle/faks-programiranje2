@@ -1,17 +1,17 @@
-package DOMACE.DN03;
+//package DOMACE.DN03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class DNO3 {
+public class DN03 {
 
     static String createPass(String fname, int n, int s) throws FileNotFoundException {
-        String[] besede = new String[100];
         File f = new File(fname);
         Scanner sc = new Scanner(f);
 
+        String[] besede = new String[Integer.parseInt(sc.nextLine())];
         int i = 0;
         while (sc.hasNextLine()){
             besede[i] = sc.nextLine();
@@ -21,23 +21,24 @@ public class DNO3 {
 
         Random r = new Random(s);
         String pass = "";
-        while (i < n){
+        int j = 0;
+        while (j < n){
             String beseda = besede[r.nextInt(i)];
             pass += beseda.charAt(r.nextInt(beseda.length()));
 
-            i++;
+            j++;
         }
         return pass;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        //String fileName = args[0];
-        //int n = Integer.parseInt(args[1]);
-        //int seed = Integer.parseInt(args[2]);
+        String fileName = args[0];
+        int n = Integer.parseInt(args[1]);
+        int seed = Integer.parseInt(args[2]);
 
-        String fileName = "gesla.txt";
-        int n = 10;
-        int seed = 100;
+        //String fileName = "C:\\Users\\Andraz Mehle\\faks-programiranje2\\src\\DOMACE\\DN03\\gesla.txt";
+        //int n = 10;
+        //int seed = 100;
 
         System.out.println(createPass(fileName, n, seed));
 
