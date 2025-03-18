@@ -1,4 +1,4 @@
-//package DOMACE.DN03;
+package DOMACE.DN03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,13 +32,13 @@ public class DN03 {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        String fileName = args[0];
-        int n = Integer.parseInt(args[1]);
-        int seed = Integer.parseInt(args[2]);
+        //String fileName = args[0];
+        //int n = Integer.parseInt(args[1]);
+        //int seed = Integer.parseInt(args[2]);
 
-        //String fileName = "C:\\Users\\Andraz Mehle\\faks-programiranje2\\src\\DOMACE\\DN03\\gesla.txt";
-        //int n = 10;
-        //int seed = 100;
+        String fileName = "C:\\Users\\Andraz Mehle\\faks-programiranje2\\src\\DOMACE\\DN03\\gesla.txt";
+        int n = 10;
+        int seed = 100;
 
         System.out.println(createPass(fileName, n, seed));
 
