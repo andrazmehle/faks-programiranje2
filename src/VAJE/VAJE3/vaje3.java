@@ -106,6 +106,6 @@ public class vaje3 {
 
     public static void main(String[] args) {
         //izpisi16bit(new short[] {(short)0b1111100011101000, (short)0b1111100111111010, (short)0b1111010001001111});
-        izpisi16bitS("Programiranje je zakon");
+        izpisi16bitS("WTF model");
     }
 }
