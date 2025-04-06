@@ -2,10 +2,7 @@ package DOMACE.DN05;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class DN05 {
     static int sirinaPovrsine;
@@ -21,17 +18,27 @@ public class DN05 {
             System.out.println("Napaka: datoteka ne obstaja.");
             System.exit(0);
         }
-
-        String[] sirinaInVisina = sc.nextLine().split("x");
+        if (!sc.hasNext()) {
+            System.out.println("Napaka: Manjka podatek o dimenzijah igralne povrsine.");
+            System.exit(0);
+        }
+            String[] sirinaInVisina = sc.nextLine().split("x");
         if (sirinaInVisina[0].isEmpty()) {
             System.out.println("Napaka: Manjka podatek o dimenzijah igralne povrsine.");
             System.exit(0);
         }
         else if (sirinaInVisina.length != 2) {
-            System.out.println("Napaka: nepravilen podatek o dimenzijah igralne povrsine.");
+            System.out.println("Napaka: Nepravilen podatek o dimenzijah igralne povrsine.");
             System.exit(0);
         }
-        else if (Integer.parseInt(sirinaInVisina[0]) < 0 || Integer.parseInt(sirinaInVisina[1]) < 0) {
+        try {
+            Integer.parseInt(sirinaInVisina[0]);
+            Integer.parseInt(sirinaInVisina[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Napaka: Nepravilen podatek o dimenzijah igralne povrsine.");
+            System.exit(0);
+        }
+        if (Integer.parseInt(sirinaInVisina[0]) <= 0 || Integer.parseInt(sirinaInVisina[1]) <= 0) {
             System.out.println("Napaka: Dimenzija mora biti pozitivna.");
             System.exit(0);
         }
@@ -43,7 +50,7 @@ public class DN05 {
         int stLadij = -1;
         try {
             stLadij = Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NoSuchElementException e) {
             System.out.println("Napaka: Manjka podatek o stevilu ladij.");
             System.exit(0);
         }
@@ -58,7 +65,7 @@ public class DN05 {
         }
 
         int i = 0;
-        while (sc.hasNextLine()) {
+        while (sc.hasNext()) {
             for (int j = 0; j < 4; j++) {
                 try {
                     postavitev[i][j] = sc.nextInt();
@@ -87,10 +94,10 @@ public class DN05 {
         }
 
         if (stLadij != i){
-            System.out.println("Napaka: Podatek o stevilu ladij se ne ujema s stevilom vnosov");
+            System.out.println("Napaka: Podatek o stevilu ladij se ne ujema s stevilom vnosov.");
             System.exit(0);
         }
-
+        sc.close();
         return postavitev;
     }
 
@@ -217,11 +224,16 @@ public class DN05 {
         //String argument1 = args[1];
         String argument0 = "povrsina";
         String argument1 = "src/DOMACE/DN05/vhod.txt";
+        //String argument2 = "11x11";
         if (Objects.equals(argument0, "postavitev")){
             izpisiPostavitev(preberiZacetnoPostavitev(argument1));
         }
         else if (Objects.equals(argument0, "povrsina")){
             izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1)));
+        }
+        else if (Objects.equals(argument0, "povecanje")){
+            //String argument2 = args[2];
+            //izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(povecajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), argument2)));
         }
     }
 }
