@@ -1,4 +1,4 @@
-package DOMACE.DN05;
+//package DOMACE.DN05;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,7 +112,7 @@ public class DN05 {
     }
 
     static int[][] izdelajIgralnoPovrsino(int[][] postavitev) {
-        int[][] povrsina = new int[2 * sirinaPovrsine][visinaPovrsine];
+        int[][] povrsina = new int[visinaPovrsine][2 * sirinaPovrsine];
         int zaporednaStevilka = 1;
 
         for (int[] ladja : postavitev) {
@@ -153,7 +153,7 @@ public class DN05 {
                     break;
                 }
 
-                if (povrsina[nx][ny] != 0) {
+                if (povrsina[ny][nx] != 0) {
                     veljavna = false;
                     break;
                 }
@@ -169,7 +169,7 @@ public class DN05 {
                 int ny = premecY + dy * i;
 
                 int stanje = (i == 0) ? 1 : 2;
-                povrsina[nx][ny] = zaporednaStevilka * 10 + stanje;
+                povrsina[ny][nx] = zaporednaStevilka * 10 + stanje;
             }
 
             zaporednaStevilka++;
@@ -179,8 +179,8 @@ public class DN05 {
     }
 
     public static void izrisiIgralnoPovrsino(int[][] igralnaPovrsina) {
-        int visina = igralnaPovrsina[0].length;
-        int sirina = igralnaPovrsina.length;
+        int visina = igralnaPovrsina.length;
+        int sirina = igralnaPovrsina[0].length;
 
         for (int i = 0; i < sirina + 3; i++) {
             System.out.print("# ");
@@ -195,7 +195,7 @@ public class DN05 {
                     System.out.print("# ");
                 }
 
-                int vrednost = igralnaPovrsina[x][y];
+                int vrednost = igralnaPovrsina[y][x];
 
                 if (vrednost == 0) {
                     System.out.print("  ");
@@ -218,12 +218,101 @@ public class DN05 {
         System.out.println();
     }
 
+    static int[][] povecajIgralnoPovrsino(int[][] postavitev, String noveDimenzije){
+        String[] tmp = noveDimenzije.split("x");
+        int novaSirina;
+        int novaVisina;
+        try {
+            novaSirina = Integer.parseInt(tmp[0]);
+            novaVisina = Integer.parseInt(tmp[1]);
+        } catch (NumberFormatException e) {
+            return postavitev;
+        }
+        boolean sx = false;
+        boolean vx = false;
+        if (novaSirina < sirinaPovrsine) {
+            novaSirina = sirinaPovrsine;
+            sx = true;
+        }
+        if (novaVisina < visinaPovrsine) {
+            novaVisina = visinaPovrsine;
+            vx = true;
+        }
+
+        int razlikaX = novaSirina - sirinaPovrsine;
+        int razlikaY = novaVisina - visinaPovrsine;
+
+        for (int[] ladja : postavitev){
+            if (!sx) {
+                ladja[1] += Math.ceil(razlikaX / 2.0);
+            }
+            if (!vx) {
+                ladja[2] += Math.ceil(razlikaY / 2.0);
+            }
+        }
+        sirinaPovrsine = novaSirina;
+        visinaPovrsine = novaVisina;
+
+        return postavitev;
+    }
+
+    static int[][] minimizirajIgralnoPovrsino(int[][] postavitev, int[][] igralnaPovrsina){
+        int maxLevo = sirinaPovrsine - 1;
+        int maxDesno = 0;
+        int maxGor = visinaPovrsine - 1;
+        int maxDol = 0;
+
+        for (int i = 0; i < visinaPovrsine; i++) {
+            for (int j = 0; j < sirinaPovrsine * 2; j++) {
+                if (igralnaPovrsina[i][j] != 0) {
+                    if (j < sirinaPovrsine) {
+                        if (j < maxLevo){
+                            maxLevo = j;
+                        }
+                        if (j > maxDesno){
+                            maxDesno = j;
+                        }
+                    }
+                    else{
+                        if (j - sirinaPovrsine < maxLevo){
+                            maxLevo = j - sirinaPovrsine;
+                        }
+                        if (j - sirinaPovrsine > maxDesno){
+                            maxDesno = j - sirinaPovrsine;
+                        }
+                    }
+                    if (i < maxGor){
+                        maxGor = i;
+                    }
+                    if (i > maxDol){
+                        maxDol = i;
+                    }
+                }
+            }
+        }
+
+        int odstraniLevo = maxLevo;
+        int odstraniDesno = sirinaPovrsine - maxDesno - 1;
+        int odstraniGor = maxGor;
+        int odstraniDol = visinaPovrsine - maxDol - 1;
+
+        for (int ladja[] : postavitev) {
+            ladja[1] -= odstraniLevo;
+            ladja[2] -= odstraniGor;
+        }
+        sirinaPovrsine -= odstraniLevo + odstraniDesno;
+        visinaPovrsine -= odstraniGor + odstraniDol;
+
+        return postavitev;
+
+    }
+
 
     public static void main(String[] args) {
-        //String argument0 = args[0];
-        //String argument1 = args[1];
-        String argument0 = "povrsina";
-        String argument1 = "src/DOMACE/DN05/vhod.txt";
+        String argument0 = args[0];
+        String argument1 = args[1];
+        //String argument0 = "zmanjsanje";
+        //String argument1 = "src/DOMACE/DN05/vhod.txt";
         //String argument2 = "11x11";
         if (Objects.equals(argument0, "postavitev")){
             izpisiPostavitev(preberiZacetnoPostavitev(argument1));
@@ -232,8 +321,11 @@ public class DN05 {
             izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1)));
         }
         else if (Objects.equals(argument0, "povecanje")){
-            //String argument2 = args[2];
-            //izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(povecajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), argument2)));
+            String argument2 = args[2];
+            izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(povecajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), argument2)));
+        }
+        else if (Objects.equals(argument0, "zmanjsanje")){
+            izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(minimizirajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1)))));
         }
     }
 }
