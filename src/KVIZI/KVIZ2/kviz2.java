@@ -14,7 +14,7 @@ public class kviz2 {
         return r;
     }
 
-    static void rotiraj(int [] tabela, int k) {
+    static void rotiraj(int[] tabela, int k) {
         for (int i = 0; i < k; i++) {
             int temp = tabela[0];
             for (int j = 0; j < tabela.length - 1; j++) {
@@ -52,9 +52,81 @@ public class kviz2 {
         return rezultat;
     }
 
+    static String prevod(String niz) {
+        boolean papajscina = true;
+        int inc = 0;
+
+        for (int i = 0; i < niz.length(); i++) {
+
+            boolean jeSamoglasnik = false;
+            switch (niz.charAt(i)) {
+                case 'a':
+                case 'e':
+                case 'i':
+                case 'o':
+                case 'u':
+                    jeSamoglasnik = true;
+                    break;
+                default:
+                    jeSamoglasnik = false;
+            }
+
+            if (jeSamoglasnik) {
+                if (i + 1 < niz.length() && niz.charAt(i + 1) == 'p' && i + 2 < niz.length() && niz.charAt(i + 2) == 'a') {
+                    i += 2;
+                } else {
+                    papajscina = false;
+                    break;
+                }
+            }
+
+        }
+
+        if (papajscina) {
+            String returnNiz = "";
+
+            for (int i = 0; i < niz.length(); i++) {
+                returnNiz += niz.charAt(i);
+
+                switch (niz.charAt(i)) {
+                    case 'a':
+                    case 'e':
+                    case 'i':
+                    case 'o':
+                    case 'u':
+                        if (i + 2 < niz.length() && niz.charAt(i + 1) == 'p' && niz.charAt(i + 2) == 'a') {
+                            i += 2;
+                        }
+                        break;
+                }
+            }
+            return returnNiz;
+        }
+        else {
+            String returnNiz = "";
+
+            for (int i = 0; i < niz.length(); i++) {
+                returnNiz += niz.charAt(i);
+
+                switch (niz.charAt(i)) {
+                    case 'a':
+                    case 'e':
+                    case 'i':
+                    case 'o':
+                    case 'u':
+                        returnNiz += "pa";
+                        break;
+                }
+            }
+
+            return returnNiz;
+        }
+    }
+
+
 
 
     public static void main(String[] args) {
-
+        System.out.println(prevod("Napaka"));
     }
 }
