@@ -2,47 +2,59 @@ package KVIZI.KVIZ2;
 
 public class kviz2 {
 
-    static int vsotaStevk(String str) {
-        int vsota = 0;
-        for (int i = 0; i < str.length(); i++) {
-            try {
-                vsota += Integer.parseInt(str.substring(i, i + 1));
-            } catch (Exception e) {
-                continue;
-            }
-        }
-        return vsota;
-    }
-
-    static boolean preveriRep(String a, String b) {
-        boolean check = false;
-
-        if (a.length() < b.length()) {
-            for (int i = 0; i < a.length() - 1; i++) {
-                if (Character.toLowerCase(a.charAt(a.length() - i - 1)) != Character.toLowerCase(b.charAt(b.length() - i - 1))) {
-                    check = false;
-                    break;
-                }
-                check = true;
-            }
-        } else {
-            for (int i = 0; i < b.length() - 1; i++) {
-                if (Character.toLowerCase(a.charAt(a.length() - i - 1)) != Character.toLowerCase(b.charAt(b.length() - i - 1))) {
-                    check = false;
-                    break;
-                }
-                check = true;
-            }
-        }
-        return check;
-    }
-
     static int[] range(int a, int b, int c) {
+        int[] r = new int[(int) Math.ceil((b - a + 0.0) / c)];
 
+        int i = 0;
+        r[i] = a;
+        while (r[i] < b - c) {
+            i++;
+            r[i] = a + c * (i);
+        }
+        return r;
     }
+
+    static void rotiraj(int [] tabela, int k) {
+        for (int i = 0; i < k; i++) {
+            int temp = tabela[0];
+            for (int j = 0; j < tabela.length - 1; j++) {
+                tabela[j] = tabela[j + 1];
+            }
+            tabela[tabela.length - 1] = temp;
+        }
+    }
+
+    public static int[] duplikati(int[] tabela) {
+        int[] temp = new int[tabela.length];
+        int stUnikatnih = 0;
+
+        for (int i = 0; i < tabela.length; i++) {
+            boolean jeDuplikat = false;
+
+            for (int j = 0; j < stUnikatnih; j++) {
+                if (tabela[i] == temp[j]) {
+                    jeDuplikat = true;
+                    break;
+                }
+            }
+
+            if (!jeDuplikat) {
+                temp[stUnikatnih] = tabela[i];
+                stUnikatnih++;
+            }
+        }
+
+        int[] rezultat = new int[stUnikatnih];
+        for (int i = 0; i < stUnikatnih; i++) {
+            rezultat[i] = temp[i];
+        }
+
+        return rezultat;
+    }
+
+
 
     public static void main(String[] args) {
-        //System.out.println(vsotaStevk("1abc2"));
-        System.out.println(preveriRep("DAN","Dan na dan"));
+
     }
 }
