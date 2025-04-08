@@ -7,6 +7,8 @@ import java.util.*;
 public class DN05 {
     static int sirinaPovrsine;
     static int visinaPovrsine;
+    static int stLadij;
+    static int[][] postavitev;
 
 
     static int[][] preberiZacetnoPostavitev(String imeDatoteke) {
@@ -47,7 +49,7 @@ public class DN05 {
             visinaPovrsine = Integer.parseInt(sirinaInVisina[1]);
         }
 
-        int stLadij = -1;
+        stLadij = -1;
         try {
             stLadij = Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException | NoSuchElementException e) {
@@ -55,7 +57,7 @@ public class DN05 {
             System.exit(0);
         }
 
-        int[][] postavitev = new int[0][0];
+        postavitev = new int[0][0];
         if (stLadij < 0) {
             System.out.println("Napaka: Stevilo ladij ne sme biti negativno.");
             System.exit(0);
@@ -199,12 +201,16 @@ public class DN05 {
 
                 if (vrednost == 0) {
                     System.out.print("  ");
+                } else if (vrednost == 6){
+                    System.out.print("o ");
                 } else {
                     int stanje = vrednost % 10;
-                    if (stanje == 1) {
-                        System.out.print("p ");
-                    } else if (stanje == 2) {
-                        System.out.print("t ");
+                    switch (stanje) {
+                        case 1: System.out.print("p "); break;
+                        case 2: System.out.print("t "); break;
+                        case 3: System.out.print("X "); break;
+                        case 4: System.out.print("x "); break;
+                        case 5: System.out.print("@ "); break;
                     }
                 }
             }
@@ -307,25 +313,145 @@ public class DN05 {
 
     }
 
+    static int[][] simulirajIgro(int[][] igralnaPovrsina, String imeDatoteke){
+        int[] ladjeHealth = new int[stLadij];
+        int potoplene0 = 0;
+        int potoplene1 = 0;
+
+        int i = 0;
+        for (int[] ladja : postavitev){
+            ladjeHealth[i] = ladja[3];
+            i++;
+        }
+
+
+        int naPotezi = 0;
+
+        Scanner sc = null;
+        try {
+            File f = new File(imeDatoteke);
+            sc = new Scanner(f);
+        } catch (FileNotFoundException e) {
+            return igralnaPovrsina;
+        }
+
+        while (sc.hasNext()) {
+            String[] temp = sc.nextLine().split(",");
+            int x;
+            int y;
+            try {
+                x = Integer.parseInt(temp[0]) - 1;
+                y = Integer.parseInt(temp[1]) - 1;
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                continue;
+            }
+
+            if (x < 0 || y < 0 || x > sirinaPovrsine || y > visinaPovrsine) {
+                continue;
+            }
+
+            int pristejX = (naPotezi == 0) ? sirinaPovrsine : 0;
+            int vrednost = igralnaPovrsina[y][x + pristejX];
+
+            if (vrednost == 0) {
+                igralnaPovrsina[y][x + pristejX] = 6;
+                naPotezi = 1 - naPotezi;
+                continue;
+            }
+            else if (vrednost == 6) {
+                naPotezi = 1 - naPotezi;
+                continue;
+            }
+            else {
+                int stanje = vrednost % 10;
+                int stLadje = vrednost / 10 - 1;
+                int potopiLadjo = -1;
+                switch (stanje) {
+                    case 1: {
+                        igralnaPovrsina[y][x + pristejX] = vrednost - stanje + 3;
+                        ladjeHealth[stLadje] -= 1;
+                        potopiLadjo = (ladjeHealth[stLadje] < 1)? stLadje + 1 : -1;
+                        break;
+                    }
+                    case 2: {
+                        igralnaPovrsina[y][x + pristejX] = vrednost - stanje + 4;
+                        ladjeHealth[stLadje] -= 1;
+                        potopiLadjo = (ladjeHealth[stLadje] < 1)? stLadje + 1 : -1;
+                        break;
+                    }
+                    case 3, 4, 5: {
+                        naPotezi = 1 - naPotezi;
+                        continue;
+                    }
+                }
+                if (potopiLadjo != -1){
+                    for (int yy = 0; yy < igralnaPovrsina.length; yy++) {
+                        for (int xx = 0; xx < igralnaPovrsina[yy].length; xx++) {
+                            if (igralnaPovrsina[yy][xx] / 10 == potopiLadjo) {
+                                igralnaPovrsina[yy][xx] = 5;
+                            }
+                        }
+                    }
+                    potoplene0 += (naPotezi == 0) ? 1 : 0;
+                    potoplene1 += (naPotezi == 1) ? 1 : 0;
+
+                    if (potoplene0 >= stLadij / 2 || potoplene1 >= stLadij / 2) {
+                        return igralnaPovrsina;
+                    }
+                }
+            }
+
+        }
+        sc.close();
+        return igralnaPovrsina;
+    }
+
+
+    static int[][] zasukajLadje(int[][] postavitev, String smerVetra){
+
+        int novaSmer;
+        switch (smerVetra){
+            case "S": novaSmer = 0; break;
+            case "J": novaSmer = 1; break;
+            case "V": novaSmer = 2; break;
+            case "Z": novaSmer = 3; break;
+            default: novaSmer = 0;
+        }
+        for (int i = 0; i < postavitev.length; i++) {
+            postavitev[i][4] = novaSmer;
+        }
+
+        return postavitev;
+    }
+
 
     public static void main(String[] args) {
         String argument0 = args[0];
         String argument1 = args[1];
-        //String argument0 = "zmanjsanje";
+        String argument2;
+        //String argument0 = "simulacija";
         //String argument1 = "src/DOMACE/DN05/vhod.txt";
         //String argument2 = "11x11";
-        if (Objects.equals(argument0, "postavitev")){
-            izpisiPostavitev(preberiZacetnoPostavitev(argument1));
-        }
-        else if (Objects.equals(argument0, "povrsina")){
-            izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1)));
-        }
-        else if (Objects.equals(argument0, "povecanje")){
-            String argument2 = args[2];
-            izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(povecajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), argument2)));
-        }
-        else if (Objects.equals(argument0, "zmanjsanje")){
-            izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(minimizirajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1)))));
+        switch (argument0) {
+            case "postavitev": izpisiPostavitev(preberiZacetnoPostavitev(argument1)); break;
+            case "povrsina": izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1))); break;
+            case "povecanje":
+                    argument2 = args[2];
+                    izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(povecajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), argument2)));
+                    break;
+            case "zmanjsanje":
+                    izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(minimizirajIgralnoPovrsino(preberiZacetnoPostavitev(argument1), izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1)))));
+                    break;
+            case "simulacija": {
+                argument2 = args[2];
+                //argument2 = "src/DOMACE/DN05/poteze.txt";
+                izrisiIgralnoPovrsino(simulirajIgro(izdelajIgralnoPovrsino(preberiZacetnoPostavitev(argument1)), argument2));
+                break;
+            }
+            case "zasuk": {
+                argument2 = args[2];
+                izrisiIgralnoPovrsino(izdelajIgralnoPovrsino(zasukajLadje(preberiZacetnoPostavitev(argument1), argument2)));
+            }
         }
     }
 }
