@@ -136,7 +136,6 @@ public class DN05 {
 
             boolean veljavna = true;
 
-
             for (int i = 0; i < dolzina; i++) {
                 int nx = premecX + dx * i;
                 int ny = premecY + dy * i;
@@ -173,10 +172,8 @@ public class DN05 {
                 int stanje = (i == 0) ? 1 : 2;
                 povrsina[ny][nx] = zaporednaStevilka * 10 + stanje;
             }
-
             zaporednaStevilka++;
         }
-
         return povrsina;
     }
 
