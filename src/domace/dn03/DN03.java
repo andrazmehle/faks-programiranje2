@@ -1,4 +1,4 @@
-package DOMACE.DN03;
+package domace.dn03;
 
 import java.io.File;
 import java.io.FileNotFoundException;

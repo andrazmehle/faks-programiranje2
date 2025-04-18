@@ -1,6 +1,4 @@
-package VAJE.VAJE5.zbirke;
-
-import VAJE.VAJE5.nakupovanje.NakupovalniSeznam;
+package vaje.vaje5.zbirke;
 
 public class Seznam {
     static String[] seznam;

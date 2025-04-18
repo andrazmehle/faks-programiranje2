@@ -1,4 +1,4 @@
-package DOMACE.DN06;
+package domace.dn06;
 
 import edu.princeton.cs.algs4.StdDraw;
 

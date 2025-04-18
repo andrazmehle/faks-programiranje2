@@ -1,4 +1,4 @@
-package VAJE.VAJE4;
+package vaje.vaje4;
 
 import java.io.File;
 import java.io.FileNotFoundException;

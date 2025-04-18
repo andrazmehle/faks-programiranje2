@@ -1,4 +1,4 @@
-package VAJE.VAJE1;
+package vaje.vaje1;
 
 public class vaje1 {
 

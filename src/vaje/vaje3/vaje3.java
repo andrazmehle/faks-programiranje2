@@ -1,7 +1,4 @@
-package VAJE.VAJE3;
-
-import java.io.FileNotFoundException;
-import java.util.Arrays;
+package vaje.vaje3;
 
 
 public class vaje3 {

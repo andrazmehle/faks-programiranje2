@@ -1,4 +1,4 @@
-package DOMACE.DN02;
+package domace.dn02;
 
 public class DN02 {
     public static void main(String[] args){
