@@ -46,8 +46,8 @@ public class DN09 {
                 if (!sc.hasNextLine())
                     break;
 
-                String vrstica = sc.nextLine();
-                String[] podatki = vrstica.split(",");
+                String v = sc.nextLine();
+                String[] podatki = v.split(",");
 
 
                 int id = Integer.parseInt(podatki[0]);
