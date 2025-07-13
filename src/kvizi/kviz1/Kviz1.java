@@ -1,4 +1,4 @@
-package kvizi.KVIZ1;
+package kvizi.kviz1;
 
 public class Kviz1{
 

@@ -28,9 +28,9 @@ public class DN09 {
             Scanner sc = new Scanner(new File(imeDatoteke));
 
             String[] prvavrstica = sc.nextLine().split(",");
-            int stPostaj = Integer.parseInt(prvavrstica[0]);
             int stLinij = Integer.parseInt(prvavrstica[1]);
             int stAvtobusov = Integer.parseInt(prvavrstica[2]);
+            int stPostaj = Integer.parseInt(prvavrstica[0]);
 
             postaje = new Postaja[stPostaj];
             linije = new Linija[stLinij];
@@ -75,6 +75,8 @@ public class DN09 {
                 }
 
                 int cakajo = 0;
+
+
                 if (podatki.length > 6 && !podatki[6].isEmpty()) {
                     cakajo = Integer.parseInt(podatki[6]);
                 }
