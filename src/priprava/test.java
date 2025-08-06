@@ -1,4 +1,5 @@
 package priprava;
+import javax.management.MBeanAttributeInfo;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -384,8 +385,70 @@ public class test{
         return vsota;
     }
 
+    static boolean preveriRep(String a, String b){
+        for (int i = 0; i < a.length(); i++){
+            if (a.substring(i).equalsIgnoreCase(b)) return true;
+        }
+        for (int i = 0; i < b.length(); i++){
+            if (b.substring(i).equalsIgnoreCase(a)) return true;
+        }
+        return false;
+    }
+
+    static int[] range(int a, int b, int c){
+        if (c <= 0) return new int[0];
+        int len = (int) Math.ceil((b - a) / (c + 0.0));
+        int[] rez = new int[len];
+        int i = 0;
+        while (a + i * c < b){
+            rez[i] = a + i * c;
+            i++;
+        }
+        return rez;
+    }
+
+    static void rotiraj(int [] tabela, int k){
+        int [] tabelacp = tabela.clone();
+        for (int i = 0; i < tabela.length; i++){
+            tabela[i] = tabelacp[Math.abs(i + k) % tabela.length];
+        }
+    }
+
+    int [] duplikati(int [] tabela){
+        int [] rez = new int[tabela.length];
+        int k = 0;
+        for (int i = 0; i < tabela.length; i++){
+            boolean obstaja = false;
+            for (int j = i; j >= 0; j--){
+                if (tabela[i] == tabela[j] && i != j){
+                    obstaja = true;
+                    break;
+                }
+            }
+            if (!obstaja){
+                rez[k] = tabela[i];
+                k++;
+            }
+        }
+        int index = 0;
+        for (int i = rez.length - 1; i >= 0; i--){
+            if (rez[i] != 0){
+                index = i;
+                break;
+            }
+        }
+        int [] rezTrimmed = Arrays.copyOf(rez, index + 1);
+        return rezTrimmed;
+    }
+
 
      public static void main(String [] args){
-         System.out.println(vsotaStevk("1234567890/*-+"));
+         int[] tabela = new int[]{1,2,3,4,5,6};
+         rotiraj(tabela,1);
+         String locilo = "";
+         for (int e : tabela) {
+             System.out.print(locilo + e );
+             locilo = ",";
+         }
     }
 }
