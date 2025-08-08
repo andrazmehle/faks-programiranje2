@@ -437,8 +437,7 @@ public class test{
                 break;
             }
         }
-        int [] rezTrimmed = Arrays.copyOf(rez, index + 1);
-        return rezTrimmed;
+        return Arrays.copyOf(rez, index + 1);
     }
 
 
