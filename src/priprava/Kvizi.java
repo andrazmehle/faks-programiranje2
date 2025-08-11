@@ -1,10 +1,7 @@
 package priprava;
-import javax.management.MBeanAttributeInfo;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
-public class test{
+public class Kvizi {
 
     void java() {
         System.out.println("   J    a   v     v  a                                                 \n" +
@@ -440,14 +437,79 @@ public class test{
         return Arrays.copyOf(rez, index + 1);
     }
 
+    class Redovalnica{
+        static String[] pridobiImena(String x){
+            String[] split = x.split(" ");
+            String[] rez = new String[split.length / 2];
+            int index = 0;
+            boolean jeDigit = false;
+            for (String y : split){
+                for (int i = 0; i < y.length(); i++){
+                    if (Character.isDigit(y.charAt(i))){
+                        jeDigit = true;
+                    }
+                }
+                if (!jeDigit){
+                    rez[index] = y;
+                    index++;
+                }
+            }
+            return rez;
+        }
+        static int[] pridobiOcene(String x){
+            String[] split = x.split(" ");
+            int[] rez = new int[split.length / 2];
+            int index = 0;
+            boolean jeDigit = false;
+            for (String y : split){
+                jeDigit = false;
+                for (int i = 0; i < y.length(); i++){
+                    if (Character.isDigit(y.charAt(i))){
+                        jeDigit = true;
+                    }
+                }
+                if (jeDigit){
+                    rez[index] = Integer.parseInt(y);
+                    index++;
+                }
+            }
+            return rez;
+        }
+        static void uredi(int[] ocene, String[] imena) {
+            Integer[] indeksi = new Integer[ocene.length];
+            for (int i = 0; i < ocene.length; i++) {
+                indeksi[i] = i;
+            }
+
+            java.util.Arrays.sort(indeksi, new java.util.Comparator<Integer>() {
+                public int compare(Integer a, Integer b) {
+                    return Integer.compare(ocene[a], ocene[b]);
+                }
+            });
+
+            int[] novaOcene = new int[ocene.length];
+            String[] novaImena = new String[imena.length];
+
+            for (int i = 0; i < indeksi.length; i++) {
+                novaOcene[i] = ocene[indeksi[i]];
+                novaImena[i] = imena[indeksi[i]];
+            }
+
+            for (int i = 0; i < ocene.length; i++) {
+                ocene[i] = novaOcene[i];
+                imena[i] = novaImena[i];
+            }
+        }
+
+        static void izpis(int[] ocene, String[] imena){
+            for (int i = 1; i < ocene.length; i++) {
+                System.out.println(i + ":" + ocene[i] + " " + imena[i]);
+            }
+        }
+
+    }
+
 
      public static void main(String [] args){
-         int[] tabela = new int[]{1,2,3,4,5,6};
-         rotiraj(tabela,1);
-         String locilo = "";
-         for (int e : tabela) {
-             System.out.print(locilo + e );
-             locilo = ",";
-         }
     }
 }

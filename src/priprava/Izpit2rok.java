@@ -1,6 +1,6 @@
 package priprava;
 
-public class izpit2rok {
+public class Izpit2rok {
     int [][] ustvariKvadrat(int n){
         int [][] kvadrat = new int[n][n];
         for (int i = 1; i <= n; i++){
@@ -40,7 +40,7 @@ public class izpit2rok {
     }
 
     public static void main(String[] args) {
-        izpit2rok izpit = new izpit2rok();
+        Izpit2rok izpit = new Izpit2rok();
         izpit.izpisiKvadrat(izpit.ustvariKvadrat(12), 5);
     }
 }
